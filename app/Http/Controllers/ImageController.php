@@ -75,9 +75,12 @@ class ImageController extends Controller
     public function showUploadedImages(Request $request)
     {
         $perPage = 4; // Define the number of images per page
+        $sortBy = $request->input('sort_by', 'upload_at'); // Default sorting by uploaded_at
+        $sortOrder = $request->input('sort_order', 'desc'); // Default sort order is descending
+
+        $images = Image::orderBy($sortBy, $sortOrder)->paginate($perPage);
     
-        $images = Image::orderBy('created_at', 'desc')->paginate($perPage);
+        return view('list', compact('images', 'perPage', 'sortBy', 'sortOrder'));
     
-        return view('list', compact('images','perPage'));
     }
 }

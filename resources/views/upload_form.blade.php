@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Upload Image</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 <body>
     @if ($errors->any())
@@ -27,4 +29,5 @@
     </form>
     <button><a href="{{route('image.list')}}" target="_self">View all uploaded files</a></button>
 </body>
+<script src="{{ asset('js/app.js') }}"></script>
 </html>

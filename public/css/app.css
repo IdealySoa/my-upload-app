@@ -11968,4 +11968,5 @@ textarea.form-control-lg {
 .img-thumbnail {
   width: inherit;
   height: inherit;
+  cursor: pointer;
 }
