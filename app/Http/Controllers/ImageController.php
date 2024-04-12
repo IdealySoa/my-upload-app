@@ -70,4 +70,14 @@ class ImageController extends Controller
 
         return $uniqueName;
     }
+
+
+    public function showUploadedImages(Request $request)
+    {
+        $perPage = 4; // Define the number of images per page
+    
+        $images = Image::orderBy('created_at', 'desc')->paginate($perPage);
+    
+        return view('list', compact('images','perPage'));
+    }
 }

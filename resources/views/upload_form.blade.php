@@ -25,5 +25,6 @@
         <input type="file" name="images[]" multiple><br><br>
         <button type="submit">Upload Image</button>
     </form>
+    <button><a href="{{route('image.list')}}" target="_self">View all uploaded files</a></button>
 </body>
 </html>
