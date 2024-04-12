@@ -37,19 +37,32 @@
 
 
         @if(count($images) > 0)
-            <div class="row">
-                @foreach($images as $image)
-                    <div class="col-md-3">
-                        <div class="thumbnail">
-                            <img src="{{ asset($image->path) }}" alt="{{ $image->name }}" class="img-thumbnail" onclick="openModal('{{ asset($image->path) }}')">
-                            <p>{{ $image->name }}</p>
-                            <p>Uploaded at:{{ $image->upload_at}}</p>
+            <form action="{{ route('images.download') }}" method="post">
+                <div class="row">
+                    @csrf
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endif
+
+                    @foreach($images as $image)
+                        <div class="col-md-3">
+                            <div class="thumbnail">
+                                <input type="checkbox" class="form-check-input" name="selected_images[]" value="{{ $image->id }}">
+                                <img src="{{ asset($image->path) }}" alt="{{ $image->name }}" class="img-thumbnail" onclick="openModal('{{ asset($image->path) }}')">
+                                <p>{{ $image->name }}</p>
+                                <p>Uploaded at:{{ $image->upload_at}}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
              
-            {{ $images->links() }} 
+                {{ $images->links() }} 
+            <!-- to download files in zip -->
+                <button type="submit" class="btn btn-primary">Download Selected Images</button>
+            </form>    
+
         @else
             <p>No images uploaded yet.</p>
         @endif
@@ -74,6 +87,10 @@
         // Show the modal
         $('#imageModal').modal('show');
     }
+
+    $(".form-check-input").on('click',function(){
+        $('div.alert.alert-danger').remove();
+    });
 </script>
 
 </html>

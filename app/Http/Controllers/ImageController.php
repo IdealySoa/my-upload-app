@@ -83,4 +83,34 @@ class ImageController extends Controller
         return view('list', compact('images', 'perPage', 'sortBy', 'sortOrder'));
     
     }
+
+    public function downloadZip(Request $request)
+    {
+        $selectedImages = $request->input('selected_images', []);
+
+        // display error message if no image selected
+        if (empty($selectedImages)) {
+            return redirect()->back()->with('error', 'Please select at least one image to download.');
+        }
+
+        // get the selected image paths
+        $imagePaths = Image::whereIn('id', $selectedImages)->pluck('path')->toArray();
+
+        // Create a zip archive containing the selected images
+        $zipFileName = 'selected_images_' . Carbon::now()->format('YmdHis') . '.zip';
+        $zip = new \ZipArchive();
+        $zip->open(public_path($zipFileName), \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        foreach ($imagePaths as $imagePath) {
+            $imageFullPath = public_path($imagePath);
+            if (file_exists($imageFullPath)) {
+                $zip->addFile($imageFullPath, basename($imagePath));
+            }
+        }
+
+        $zip->close();
+        
+        // Send the zip archive to the user for download
+        return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+    }
 }
