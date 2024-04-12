@@ -61,7 +61,8 @@
                 {{ $images->links() }} 
             <!-- to download files in zip -->
                 <button type="submit" class="btn btn-primary">Download Selected Images</button>
-            </form>    
+            </form>
+            <a href="{{ route('image.upload') }}" class="btn btn-secondary mt-3">Upload new images</a>    
 
         @else
             <p>No images uploaded yet.</p>
