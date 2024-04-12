@@ -6,8 +6,9 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center div-form">
             <div class="col-md-8">
+            <h1>Upload Images here!</h1>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>

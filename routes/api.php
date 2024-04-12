@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// the API for list of image and details
+Route::get('/images', [ImageController::class, 'getImagesJson'])->name('images.json');
+Route::get('/images/{id}', [ImageController::class, 'getImageDetails'])->name('api.images.details');

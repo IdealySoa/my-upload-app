@@ -113,4 +113,23 @@ class ImageController extends Controller
         // Send the zip archive to the user for download
         return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
     }
+
+    public function getImagesJson(Request $request)
+    {
+        $images = Image::all(['id', 'name']); // Retrieve only the ID and name columns
+
+        return response()->json($images);
+    }
+
+    public function getImageDetails($id)
+    {
+        $image = Image::find($id);
+
+        if (!$image) {
+            return response()->json(['error' => 'Image not found'], 404); //if there's no file found with the id that the user entered
+        }
+
+        return response()->json($image);
+    }
+
 }
